@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0d0c" />
+  <meta name="description" content="Nazakat — aspiring software engineer, AI engineer, and founder. Exploring software, AI products, and building ideas into useful experiences." />
+  <title>Nazakat — Software, AI & Ideas</title>
+  <style>
+    :root {
+      --bg: #0b0d0c;
+      --bg-soft: #101412;
+      --panel: rgba(20, 26, 23, .78);
+      --panel-solid: #141a17;
+      --line: rgba(220, 240, 224, .11);
+      --text: #edf3ee;
+      --muted: #a0ada4;
+      --soft: #718077;
+      --accent: #c7f36b;
+      --accent-2: #a2d84e;
+      --mint: #8de0c0;
+      --orange: #ffbd82;
+      --radius: 22px;
+      --max: 1160px;
+      --shadow: 0 24px 70px rgba(0,0,0,.28);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 12% 4%, rgba(152, 205, 91, .10), transparent 28%),
+        radial-gradient(ellipse at 92% 25%, rgba(84, 157, 126, .09), transparent 26%),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .16;
+      z-index: -1;
+      background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 58px 58px;
+      mask-image: linear-gradient(to bottom, black, transparent 82%);
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(11, 13, 12, .78);
+      border-bottom: 1px solid rgba(220,240,224,.07);
+    }
+    .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 750; letter-spacing: -.04em; font-size: 18px; }
+    .brand-mark { width: 34px; height: 34px; border-radius: 11px; background: var(--accent); color: #11170d; display: grid; place-items: center; font-size: 17px; font-weight: 900; box-shadow: 0 0 28px rgba(199,243,107,.16); }
+    .nav-links { display: flex; align-items: center; gap: 30px; color: var(--muted); font-size: 13px; font-weight: 600; }
+    .nav-links a { transition: color .2s ease; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta, .button-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 11px 17px; border-radius: 999px; border: 1px solid rgba(199,243,107,.28);
+      background: var(--accent); color: #13190e; font-weight: 800; font-size: 13px;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .nav-cta:hover, .button-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(199,243,107,.18); background: #d4fa83; }
+    .menu-toggle { display: none; border: 1px solid var(--line); color: var(--text); background: var(--panel); border-radius: 12px; padding: 9px 11px; cursor: pointer; }
+
+    .hero { min-height: 680px; display: grid; grid-template-columns: 1.12fr .88fr; align-items: center; gap: 60px; padding: 90px 0 82px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: .16em; font-size: 10px; font-weight: 850; }
+    .eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--accent); }
+    h1 { margin: 21px 0 24px; max-width: 760px; font-size: clamp(50px, 7.3vw, 88px); line-height: .99; letter-spacing: -.075em; font-weight: 760; }
+    h1 .highlight { color: var(--accent); }
+    .hero-copy { max-width: 610px; color: var(--muted); font-size: clamp(16px, 1.6vw, 18px); line-height: 1.8; }
+    .hero-copy strong { color: var(--text); font-weight: 650; }
+    .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 13px; margin-top: 32px; }
+    .button-quiet { display: inline-flex; align-items: center; gap: 9px; padding: 11px 15px; border: 1px solid var(--line); color: var(--text); border-radius: 999px; font-size: 13px; font-weight: 650; transition: border-color .2s, background .2s; }
+    .button-quiet:hover { border-color: rgba(199,243,107,.45); background: rgba(199,243,107,.06); }
+    .arrow { font-size: 16px; line-height: 1; }
+    .hero-note { margin-top: 38px; color: var(--soft); font-size: 11px; letter-spacing: .04em; display: flex; align-items: center; gap: 10px; }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(199,243,107,.09); }
+    .hero-visual { min-height: 440px; position: relative; display: grid; place-items: center; }
+    .orbit { position: absolute; width: min(100%, 440px); aspect-ratio: 1; border: 1px solid rgba(199,243,107,.15); border-radius: 50%; transform: rotate(-18deg); }
+    .orbit::before, .orbit::after { content: ""; position: absolute; border: 1px solid rgba(141,224,192,.13); border-radius: 50%; inset: 10%; transform: rotate(45deg); }
+    .orbit::after { inset: 23%; border-color: rgba(199,243,107,.12); transform: rotate(-30deg); }
+    .orbit-dot { position: absolute; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; top: 9%; left: 24%; box-shadow: 0 0 22px rgba(199,243,107,.7); }
+    .profile-card { position: relative; z-index: 1; width: min(100%, 330px); padding: 27px; border: 1px solid rgba(220,240,224,.14); border-radius: 28px; background: linear-gradient(145deg, rgba(29,39,32,.94), rgba(15,20,17,.93)); box-shadow: var(--shadow); transform: rotate(3deg); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; color: var(--soft); font-size: 10px; text-transform: uppercase; letter-spacing: .14em; }
+    .avatar { width: 76px; height: 76px; display: grid; place-items: center; margin: 30px 0 22px; border-radius: 23px; color: #18200f; font-size: 33px; font-weight: 850; letter-spacing: -.08em; background: linear-gradient(145deg, #dafa91, #8dc95d); box-shadow: 0 15px 35px rgba(159,218,91,.16); }
+    .profile-card h2 { margin: 0; font-size: 27px; letter-spacing: -.055em; }
+    .profile-card p { color: var(--muted); font-size: 13px; margin: 6px 0 20px; }
+    .card-tags { display: flex; gap: 7px; flex-wrap: wrap; }
+    .tag { border: 1px solid rgba(220,240,224,.12); border-radius: 999px; padding: 6px 9px; color: #bdc9bf; font-size: 10px; }
+    .floating-chip { position: absolute; z-index: 2; padding: 11px 14px; border-radius: 14px; border: 1px solid var(--line); background: rgba(19,26,21,.92); color: var(--muted); font-size: 11px; box-shadow: 0 12px 34px rgba(0,0,0,.25); backdrop-filter: blur(12px); }
+    .floating-chip b { color: var(--accent); font-weight: 750; }
+    .chip-one { top: 11%; right: 1%; transform: rotate(5deg); }
+    .chip-two { bottom: 12%; left: -2%; transform: rotate(-5deg); }
+
+    section { padding: 104px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 38px; }
+    .section-kicker { color: var(--accent); font-size: 10px; letter-spacing: .17em; text-transform: uppercase; font-weight: 850; margin-bottom: 13px; }
+    h2.section-title { font-size: clamp(32px, 4vw, 48px); line-height: 1.08; letter-spacing: -.06em; margin: 0; font-weight: 740; }
+    .section-intro { max-width: 440px; color: var(--muted); font-size: 14px; line-height: 1.8; margin: 0; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .panel { border: 1px solid var(--line); background: linear-gradient(145deg, rgba(22,29,24,.88), rgba(16,21,18,.88)); border-radius: var(--radius); padding: 29px; }
+    .about-main { min-height: 310px; }
+    .about-main p { color: var(--muted); font-size: 15px; line-height: 1.9; margin: 0 0 16px; }
+    .about-main p strong { color: var(--text); }
+    .focus-stack { display: grid; gap: 18px; }
+    .focus-item { display: flex; gap: 17px; align-items: flex-start; }
+    .focus-icon { flex: 0 0 42px; width: 42px; height: 42px; display: grid; place-items: center; color: var(--accent); border-radius: 13px; background: rgba(199,243,107,.08); border: 1px solid rgba(199,243,107,.14); }
+    .focus-item h3 { font-size: 14px; margin: 0 0 4px; letter-spacing: -.02em; }
+    .focus-item p { color: var(--muted); font-size: 12px; line-height: 1.7; margin: 0; }
+    .strengths { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 18px; }
+    .strength { padding: 18px 16px; background: rgba(255,255,255,.025); border: 1px solid var(--line); border-radius: 16px; }
+    .strength span { color: var(--accent); display: block; font-size: 10px; font-weight: 800; letter-spacing: .1em; margin-bottom: 8px; }
+    .strength b { font-size: 13px; font-weight: 650; }
+
+    .projects { background: linear-gradient(180deg, transparent, rgba(17,23,19,.56), transparent); }
+    .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 17px; }
+    .project-card { min-height: 300px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: transform .25s ease, border-color .25s ease; }
+    .project-card:hover { transform: translateY(-5px); border-color: rgba(199,243,107,.32); }
+    .project-card::after { content: ""; position: absolute; width: 190px; height: 190px; right: -75px; top: -85px; border-radius: 50%; background: radial-gradient(circle, rgba(199,243,107,.10), transparent 70%); pointer-events: none; }
+    .project-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 23px; }
+    .project-symbol { width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid rgba(199,243,107,.18); border-radius: 15px; background: rgba(199,243,107,.07); color: var(--accent); font-size: 19px; font-weight: 800; }
+    .status { display: inline-flex; align-items: center; gap: 7px; border: 1px solid rgba(199,243,107,.18); padding: 6px 9px; border-radius: 999px; color: #c4d99c; font-size: 9px; text-transform: uppercase; letter-spacing: .09em; font-weight: 800; }
+    .status::before { content: ""; width: 5px; height: 5px; background: var(--accent); border-radius: 50%; }
+    .status.planned { border-color: rgba(255,189,130,.2); color: #e3b98f; }
+    .status.planned::before { background: var(--orange); }
+    .project-card h3 { margin: 0 0 9px; font-size: 25px; letter-spacing: -.05em; }
+    .project-card .project-type { color: var(--mint); font-size: 10px; font-weight: 750; letter-spacing: .11em; text-transform: uppercase; margin-bottom: 10px; }
+    .project-card p { color: var(--muted); font-size: 13px; line-height: 1.8; margin: 0; max-width: 520px; }
+    .project-details { margin-top: 20px; padding-top: 17px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 7px; }
+    .project-details span { color: #aab7ad; background: rgba(255,255,255,.035); border-radius: 7px; padding: 5px 8px; font-size: 10px; }
+    .project-footnote { color: var(--soft); font-size: 11px; margin-top: 22px; }
+
+    .learning-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; }
+    .learning-panel h3, .tools-panel h3 { font-size: 18px; margin: 0 0 8px; letter-spacing: -.03em; }
+    .subtle-copy { color: var(--muted); font-size: 12px; line-height: 1.7; margin: 0 0 24px; }
+    .timeline { border-left: 1px solid rgba(199,243,107,.26); margin-left: 7px; padding-left: 25px; display: grid; gap: 23px; }
+    .timeline-item { position: relative; }
+    .timeline-item::before { content: ""; width: 9px; height: 9px; position: absolute; left: -30px; top: 5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(199,243,107,.08); }
+    .timeline-item .when { color: var(--accent); font-size: 9px; letter-spacing: .13em; text-transform: uppercase; font-weight: 850; }
+    .timeline-item h4 { margin: 5px 0 4px; font-size: 14px; }
+    .timeline-item p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .tool-group { margin-bottom: 24px; }
+    .tool-group:last-child { margin-bottom: 0; }
+    .tool-label { color: var(--soft); font-size: 9px; font-weight: 850; text-transform: uppercase; letter-spacing: .15em; margin-bottom: 10px; }
+    .tool-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tool-pill { color: #d0d9d1; padding: 8px 11px; font-size: 11px; border-radius: 10px; border: 1px solid var(--line); background: rgba(255,255,255,.025); }
+    .tool-pill.learning { border-color: rgba(141,224,192,.19); color: #a9ddca; }
+    .learning-note { margin-top: 19px; padding: 13px 14px; border-radius: 13px; background: rgba(199,243,107,.055); border: 1px solid rgba(199,243,107,.12); color: #bcc9b3; font-size: 11px; line-height: 1.7; }
+
+    .direction-card { padding: 40px; border-radius: 28px; border: 1px solid rgba(199,243,107,.2); background: radial-gradient(ellipse at 100% 0%, rgba(199,243,107,.12), transparent 43%), linear-gradient(120deg, #172019, #111713); position: relative; overflow: hidden; }
+    .direction-card::after { content: ""; position: absolute; width: 310px; height: 310px; border: 1px solid rgba(199,243,107,.09); border-radius: 50%; right: -100px; bottom: -210px; box-shadow: 0 0 0 35px rgba(199,243,107,.025), 0 0 0 70px rgba(199,243,107,.018); }
+    .direction-card h2 { max-width: 720px; font-size: clamp(31px, 4.5vw, 53px); line-height: 1.08; letter-spacing: -.065em; margin: 12px 0 15px; position: relative; z-index: 1; }
+    .direction-card p { max-width: 620px; color: var(--muted); font-size: 14px; line-height: 1.8; margin: 0; position: relative; z-index: 1; }
+    .goal-row { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; position: relative; z-index: 1; }
+    .goal { padding: 9px 13px; color: #d7e8c1; border: 1px solid rgba(199,243,107,.2); border-radius: 999px; background: rgba(199,243,107,.055); font-size: 11px; font-weight: 700; }
+
+    footer { padding: 36px 0 44px; border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-name { font-weight: 800; letter-spacing: -.04em; }
+    .footer-copy { color: var(--soft); font-size: 10px; margin-top: 4px; }
+    .back-top { color: var(--muted); font-size: 11px; transition: color .2s; }
+    .back-top:hover { color: var(--accent); }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 850px) {
+      .hero { grid-template-columns: 1fr; gap: 10px; padding-top: 74px; }
+      .hero-visual { min-height: 390px; }
+      .chip-one { right: 8%; }
+      .chip-two { left: 6%; }
+      .about-grid, .learning-grid { grid-template-columns: 1fr; }
+      .strengths { grid-template-columns: repeat(2, 1fr); }
+      .section-head { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 640px) {
+      .container { width: min(var(--max), calc(100% - 34px)); }
+      .nav { min-height: 68px; }
+      .menu-toggle { display: inline-flex; }
+      .nav-cta { display: none; }
+      .nav-links { display: none; position: absolute; top: 68px; left: 0; right: 0; padding: 18px 24px 22px; flex-direction: column; align-items: flex-start; gap: 17px; background: rgba(11,13,12,.97); border-bottom: 1px solid var(--line); }
+      .nav-links.open { display: flex; }
+      .hero { min-height: auto; padding: 70px 0 56px; }
+      h1 { font-size: clamp(48px, 14vw, 68px); }
+      .hero-visual { min-height: 350px; }
+      .orbit { width: 330px; }
+      .profile-card { width: 285px; }
+      section { padding: 75px 0; }
+      .project-grid { grid-template-columns: 1fr; }
+      .project-card { min-height: 0; }
+      .panel { padding: 23px; }
+      .strengths { gap: 9px; }
+      .strength { padding: 15px 13px; }
+      .direction-card { padding: 27px 23px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="Nazakat home"><span class="brand-mark">N.</span><span>NAZAKAT</span></a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#journey">Learning journey</a>
+        <a href="#direction">Direction</a>
+      </nav>
+      <a class="nav-cta" href="#direction">What I'm building <span class="arrow">↗</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero" id="home">
+      <div class="hero-content">
+        <div class="eyebrow">Curious mind · Builder in progress</div>
+        <h1>Learning to build<br />what comes <span class="highlight">next.</span></h1>
+        <p class="hero-copy">I'm <strong>Nazakat</strong> — an aspiring software engineer, AI engineer, and founder. I explore technology by turning ideas into prototypes, learning how products work, and steadily building the foundations to create useful things.</p>
+        <div class="hero-actions">
+          <a class="button-primary" href="#projects">Explore my projects <span class="arrow">↗</span></a>
+          <a class="button-quiet" href="#about">Get to know me <span class="arrow">↓</span></a>
+        </div>
+        <div class="hero-note"><span class="live-dot"></span> Currently learning Python and exploring AI-powered products</div>
+      </div>
+      <div class="hero-visual" aria-label="Personal introduction card">
+        <div class="orbit"><span class="orbit-dot"></span></div>
+        <div class="floating-chip chip-one"><b>AI</b> · Ideas into experiments</div>
+        <div class="floating-chip chip-two"><b>BUILD</b> · Learn by making</div>
+        <div class="profile-card">
+          <div class="card-top"><span>Personal portfolio</span><span>01 / 01</span></div>
+          <div class="avatar">N.</div>
+          <h2>Nazakat</h2>
+          <p>Student · Aspiring technologist · Future founder</p>
+          <div class="card-tags"><span class="tag">Software</span><span class="tag">Artificial Intelligence</span><span class="tag">Entrepreneurship</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><div class="section-kicker">01 / About me</div><h2 class="section-title">A learner with a<br />builder's mindset.</h2></div>
+          <p class="section-intro">I'm at the beginning of my technical journey, but I already enjoy thinking about products, solving problems, and exploring how technology can make everyday experiences better.</p>
+        </div>
+        <div class="about-grid reveal">
+          <article class="panel about-main">
+            <p>My journey is driven by a simple ambition: <strong>understand technology deeply enough to build meaningful products with it.</strong></p>
+            <p>I've been exploring AI tools and app-building platforms, experimenting with product ideas, and learning the fundamentals of programming. I don't consider myself an expert yet. I'm documenting the process, improving one concept at a time, and learning by doing.</p>
+            <p>I'm especially interested in the space where <strong>software engineering, AI, and entrepreneurship</strong> meet.</p>
+          </article>
+          <article class="panel">
+            <div class="focus-stack">
+              <div class="focus-item"><div class="focus-icon">⌘</div><div><h3>Product thinking</h3><p>Breaking an idea into users, features, workflows, and a practical first version.</p></div></div>
+              <div class="focus-item"><div class="focus-icon">✳</div><div><h3>Learning by experimenting</h3><p>Using tools and prototypes to understand how software and AI experiences are put together.</p></div></div>
+              <div class="focus-item"><div class="focus-icon">↗</div><div><h3>Long-term ambition</h3><p>Growing from a beginner into an engineer who can build and eventually lead a technology company.</p></div></div>
+            </div>
+          </article>
+        </div>
+        <div class="strengths reveal" aria-label="Personal strengths">
+          <div class="strength"><span>01</span><b>Curiosity</b></div>
+          <div class="strength"><span>02</span><b>Initiative</b></div>
+          <div class="strength"><span>03</span><b>Persistence</b></div>
+          <div class="strength"><span>04</span><b>Product vision</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects" id="projects">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><div class="section-kicker">02 / Selected projects</div><h2 class="section-title">Ideas I'm bringing<br />to life.</h2></div>
+          <p class="section-intro">A mix of active experiments, prototypes, and early product concepts. Each one is part of my learning process; the status labels show where the work currently stands.</p>
+        </div>
+        <div class="project-grid">
+          <article class="panel project-card reveal">
+            <div class="project-top"><div class="project-symbol">P.</div><span class="status">Active development</span></div>
+            <div class="project-type">Personal AI agent · Main focus</div>
+            <h3>POINTER</h3>
+            <p>A personal AI assistant concept for helping with everyday digital tasks. The first cloud-based stage connects Gemini, experiments with web search grounding, and tests reminder workflows. The broader vision includes voice interaction and useful integrations across devices and services.</p>
+            <div class="project-details"><span>Google AI Studio</span><span>Gemini API</span><span>Search grounding experiment</span><span>Reminder prototype</span></div>
+          </article>
+          <article class="panel project-card reveal">
+            <div class="project-top"><div class="project-symbol">1B</div><span class="status">Prototype / planning</span></div>
+            <div class="project-type">Local food delivery · Product idea</div>
+            <h3>ONEBITE</h3>
+            <p>A food-delivery platform concept designed with local needs in mind, starting with Kupwara. The product plan includes restaurant and rider portals, menu management, incoming orders, delivery workflows, and cash-on-delivery for an initial launch.</p>
+            <div class="project-details"><span>Lovable</span><span>Replit</span><span>Restaurant portal</span><span>Rider workflow</span></div>
+          </article>
+          <article class="panel project-card reveal">
+            <div class="project-top"><div class="project-symbol">⌨</div><span class="status planned">Concept</span></div>
+            <div class="project-type">Learning platform · Product exploration</div>
+            <h3>Typing platform</h3>
+            <p>An idea for a polished typing-practice website, with a path from beginner to advanced, interactive lessons, progress tracking, and measurable speed and accuracy.</p>
+            <div class="project-details"><span>Web experience</span><span>Gamified practice</span><span>Progress tracking</span></div>
+          </article>
+          <article class="panel project-card reveal">
+            <div class="project-top"><div class="project-symbol">◇</div><span class="status planned">Concept</span></div>
+            <div class="project-type">Game concept · Puzzle</div>
+            <h3>Mind Blocks</h3>
+            <p>A puzzle-game idea focused on thinking, patterns, and problem-solving. It remains an early concept in my collection of product experiments.</p>
+            <div class="project-details"><span>Puzzle design</span><span>Game mechanics</span><span>Early concept</span></div>
+          </article>
+        </div>
+        <p class="project-footnote reveal">Project status is intentionally described at the level of prototype, development, or concept—not as a claim that every idea is a finished or publicly launched product.</p>
+      </div>
+    </section>
+
+    <section id="journey">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><div class="section-kicker">03 / Learning journey</div><h2 class="section-title">Building the<br />foundations.</h2></div>
+          <p class="section-intro">My current stage is beginner-level programming, supported by hands-on experiments with AI tools and product-building platforms.</p>
+        </div>
+        <div class="learning-grid">
+          <article class="panel learning-panel reveal">
+            <h3>Where I am right now</h3>
+            <p class="subtle-copy">A practical snapshot of my learning—not a list of technologies I claim to have mastered.</p>
+            <div class="timeline">
+              <div class="timeline-item"><div class="when">Learning now</div><h4>Python fundamentals</h4><p>Working through beginner concepts including variables, reassignment, data types, and basic practice questions. Current progress is in the early lessons of a structured Python course.</p></div>
+              <div class="timeline-item"><div class="when">Hands-on exploration</div><h4>AI product development</h4><p>Experimenting with Google AI Studio, Gemini API integration, prompt-driven workflows, and early agent-style features through POINTER.</p></div>
+              <div class="timeline-item"><div class="when">Completed learning path</div><h4>Google Gen AI Leader learning path</h4><p>Completed the five-badge learning path and explored the fundamentals of generative AI and its use in products.</p></div>
+              <div class="timeline-item"><div class="when">Next milestones</div><h4>Strengthen software fundamentals</h4><p>Continue Python, then build confidence with web fundamentals, APIs, databases, authentication, and backend concepts through small projects.</p></div>
+            </div>
+          </article>
+          <article class="panel tools-panel reveal">
+            <h3>Tools & areas I'm exploring</h3>
+            <p class="subtle-copy">Some are tools I've used in experiments; others are areas I'm still learning.</p>
+            <div class="tool-group"><div class="tool-label">Tools used in projects</div><div class="tool-pills"><span class="tool-pill">Google AI Studio</span><span class="tool-pill">Gemini API</span><span class="tool-pill">Lovable</span><span class="tool-pill">Replit</span></div></div>
+            <div class="tool-group"><div class="tool-label">Cloud & app ecosystem</div><div class="tool-pills"><span class="tool-pill">Google Cloud</span><span class="tool-pill">Firebase</span></div></div>
+            <div class="tool-group"><div class="tool-label">Next learning areas</div><div class="tool-pills"><span class="tool-pill learning">HTML & CSS</span><span class="tool-pill learning">APIs</span><span class="tool-pill learning">Databases</span><span class="tool-pill learning">Authentication</span><span class="tool-pill learning">Backend development</span></div></div>
+            <div class="learning-note"><strong>How I learn:</strong> simple explanations, real examples, small coding exercises, and building projects step by step. I'm focused on understanding the fundamentals—not just making something work with an AI tool.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="direction">
+      <div class="container">
+        <div class="direction-card reveal">
+          <div class="section-kicker">04 / Where I'm headed</div>
+          <h2>From curious student to engineer, AI builder, and founder.</h2>
+          <p>My long-term goal is to become a strong software engineer, grow into AI engineering, and eventually build a company around products that solve real problems. For now, the focus is clear: learn the fundamentals, keep shipping small experiments, and improve with every project.</p>
+          <div class="goal-row"><span class="goal">Software Engineer</span><span class="goal">AI Engineer</span><span class="goal">Founder</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <!-- CUSTOMIZE: Add your email, GitHub, and LinkedIn links here when you are ready to publish them. -->
+    <div class="container footer-inner">
+      <div><div class="footer-name">NAZAKAT<span style="color:var(--accent)">.</span></div><div class="footer-copy">Learning openly. Building with purpose. © <span id="year"></span></div></div>
+      <a class="back-top" href="#home">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile navigation
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.textContent = isOpen ? '✕' : '☰';
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.textContent = '☰';
+    }));
+
+    // Reveal sections as they enter the viewport; respect reduced-motion preferences.
+    const revealItems = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealItems.forEach(item => observer.observe(item));
+    } else {
+      revealItems.forEach(item => item.classList.add('visible'));
+    }
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
